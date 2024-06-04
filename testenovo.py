@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import geopandas as gpd
+import networkx as nx
+import plotly.graph_objects as go
 
 # Configurações iniciais
 sns.set_style("dark")
@@ -289,4 +291,46 @@ fig = px.histogram(df, x='country', title="Distribuição de Suicídios por Paí
 st.plotly_chart(fig)
 
 
+
+# TESTES, DAQUI PRA BAIXO
+
+
+# Crie um gráfico de rede vazio
+G = nx.Graph()
+
+# Adicione nós para representar países
+G.add_nodes_from(df['country'].unique())
+
+# Adicione arestas para representar conexões entre países (por exemplo, comércio, migração, etc.)
+# Suponha que você tenha dados de conexões entre países em um DataFrame chamado df_connections
+for index, row in df_connections.iterrows():
+    G.add_edge(row['country_source'], row['country_target'], weight=row['connection_strength'])
+
+# Desenhe o gráfico de rede
+plt.figure(figsize=(12, 8))
+pos = nx.spring_layout(G)  # Posicionamento dos nós
+nx.draw(G, pos, with_labels=True, node_size=2000, node_color='skyblue', font_size=10, font_weight='bold')
+edge_labels = nx.get_edge_attributes(G, 'weight')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+plt.title('Gráfico de Rede de Conexões entre Países')
+plt.show()
+
+
+
+# Crie um gráfico de Sankey
+fig = go.Figure(data=[go.Sankey(
+    node=dict(
+        pad=15,
+        thickness=20,
+        line=dict(color="black", width=0.5),
+        label=["Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4", "Grupo 5", "Grupo 6"]
+    ),
+    link=dict(
+        source=[0, 1, 1, 2, 2, 3, 3, 4],
+        target=[2, 3, 4, 5, 6, 5, 6, 5],
+        value=[8, 4, 2, 8, 4, 2, 8, 4]
+    ))])
+
+fig.update_layout(title_text="Gráfico de Sankey")
+fig.show()
 

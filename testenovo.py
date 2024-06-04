@@ -204,7 +204,7 @@ elif option == 'Suicídios por Gênero':
     st.plotly_chart(fig)
 # Adicionando interatividade com Plotly
 st.header("Gráficos Interativos")
-option = st.selectbox('Selecione o Gráfico', ('Tendência de Suicídios por Sexo', 'Suicídios por Faixa Etária', 'Suicídios por Geração', 'Suicídios por Gênero'))
+option = st.selectbox('Selecione o Gráfico', ('Tendência de Suicídios por Sexo', 'Suicídios por Faixa Etária', 'Suicídios por Geração', 'Suicídios por Gênero'), key="graficos_interativos")
 
 if option == 'Tendência de Suicídios por Sexo':
     fig = px.line(df_trend, labels={'value': 'Taxa de Suicídio por 100k habitantes', 'year': 'Ano'}, title="Tendência das Taxas de Suicídio por Sexo ao Longo do Tempo")
@@ -221,6 +221,7 @@ elif option == 'Suicídios por Geração':
 elif option == 'Suicídios por Gênero':
     fig = px.pie(df_brasil, names='sex', values='suicides_no', title="Número de Suicídios por Gênero no Brasil")
     st.plotly_chart(fig)
+
 # Adicionando mais gráficos interativos
 st.header("Mais Gráficos Interativos")
 

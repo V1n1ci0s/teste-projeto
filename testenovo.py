@@ -303,4 +303,3 @@ fig = px.choropleth_mapbox(gdf_brazil,
 fig.update_geos(fitbounds="locations", visible=False)
 fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 st.plotly_chart(fig)
-

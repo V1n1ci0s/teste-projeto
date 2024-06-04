@@ -322,3 +322,4 @@ fig.update_geos(projection_type="mercator")  # Definir a projeção para mercato
 fig.update_layout(coloraxis_colorbar=dict(title="Suicídios/100k Habitantes"),
                   margin={"r":0,"t":30,"l":0,"b":0})
 st.plotly_chart(fig)
+

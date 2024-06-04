@@ -6,9 +6,6 @@ import seaborn as sns
 import plotly.express as px
 import geopandas as gpd
 
-# Carregar o GeoJSON dos estados do Brasil
-gdf_brazil_states = gpd.read_file('caminho_para_seu_arquivo/estados_do_brasil.geojson')
-
 # Configurações iniciais
 sns.set_style("dark")
 cor_genero = ['#F781D8', '#819FF7']

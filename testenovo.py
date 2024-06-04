@@ -125,4 +125,165 @@ mulheres = df.groupby(['sex', 'age'])['suicides_no'].sum()[:6]
 homens = df.groupby(['sex', 'age'])['suicides_no'].sum()[6:]
 
 fig, ax = plt.subplots(figsize=(10, 5))
-sns.barplot(x=[x.split
+sns.barplot(x=[x.split(' ')[0] for x in mulheres.index.get_level_values(1)], y=mulheres.values, ax=ax)
+ax.set_title('Faixa etária (mulheres)', fontsize=19)
+fig, ax = plt.subplots(figsize=(10, 5))
+sns.barplot(x=[x.split(' ')[0] for x in mulheres.index.get_level_values(1)], y=mulheres.values, ax=ax)
+ax.set_title('Faixa etária (mulheres)', fontsize=19)
+st.pyplot(fig)
+
+# Total de homens e mulheres
+st.write(f"""
+Total de homens: {sum(homens)}
+Total de mulheres: {sum(mulheres)}
+""")
+
+# PIB per capita ao longo do tempo no Brasil
+st.header("PIB per Capita ao Longo do Tempo no Brasil")
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.lineplot(x=anos, y=gdp_media_brasil, color='green', ax=ax)
+ax.set_ylabel('PIB per capita ($)', fontsize=15)
+ax.set_title('PIB per capita ao longo do tempo', fontsize=19)
+st.pyplot(fig)
+
+# Correlação entre PIB per capita e número de suicídios no Brasil
+st.header("Correlação entre PIB per Capita e Número de Suicídios no Brasil")
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.regplot(x=gdp_media_brasil, y=suicidio_brasil_media, ax=ax, color='green')
+ax.set_title('Correlação entre PIB per capita e número de suicídios por 100 mil habitantes', fontsize=15)
+ax.set_ylabel('Média de suicídio / 100k habitantes', fontsize=13)
+ax.set_xlabel('PIB per capita ($)', fontsize=11)
+st.pyplot(fig)
+
+# Média de suicídio no Brasil ao longo do tempo
+st.header("Média de Suicídio no Brasil ao Longo do Tempo")
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.lineplot(x=anos, y=suicidio_brasil_media, color='green', ax=ax)
+ax.set_title('Média de suicídio a cada ano por 100 mil habitantes', fontsize=15)
+ax.set_ylabel('Média de suicídio / 100k habitantes', fontsize=13)
+st.pyplot(fig)
+
+# Média de suicídio no Brasil ao longo do tempo com regressão
+st.header("Média de Suicídio no Brasil ao Longo do Tempo com Regressão")
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.regplot(x=anos, y=suicidio_brasil_media, ax=ax, color='green')
+ax.set_title('Média de suicídio no Brasil a cada 100 mil habitantes ao longo do tempo', fontsize=17)
+ax.set_ylabel('Média de suicídio / 100k habitantes', fontsize=13)
+ax.set_xlabel('Anos', fontsize=13)
+sns.lineplot(x=anos, y=suicidio_brasil_media, color='green', ax=ax)
+st.pyplot(fig)
+
+# Mapa mundial interativo com Plotly
+st.header("Mapa Mundial de Taxas de Suicídio")
+df_world = df.groupby(['year', 'country'])['suicides/100k pop'].mean().reset_index()
+year_selected = st.slider("Selecione o Ano", min_value=int(df_world['year'].min()), max_value=int(df_world['year'].max()), value=int(df_world['year'].min()))
+
+df_year = df_world[df_world['year'] == year_selected]
+
+fig = px.choropleth(df_year, locations="country", locationmode='country names', color="suicides/100k pop", hover_name="country", projection="natural earth", title="Taxa de Suicídio por 100k habitantes")
+st.plotly_chart(fig)
+
+# Adicionando interatividade com Plotly
+st.header("Gráficos Interativos")
+option = st.selectbox('Selecione o Gráfico', ('Tendência de Suicídios por Sexo', 'Suicídios por Faixa Etária', 'Suicídios por Geração', 'Suicídios por Gênero'))
+
+if option == 'Tendência de Suicídios por Sexo':
+    fig = px.line(df_trend, labels={'value': 'Taxa de Suicídio por 100k habitantes', 'year': 'Ano'}, title="Tendência das Taxas de Suicídio por Sexo ao Longo do Tempo")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Faixa Etária':
+    fig = px.bar(tabela.reset_index(), x='year', y=tabela.columns, barmode='stack', title="Suicídios por Faixa Etária no Brasil")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Geração':
+    fig = px.histogram(df_brasil, x='generation', title="Suicídios por Geração no Brasil")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Gênero':
+    fig = px.pie(df_brasil, names='sex', values='suicides_no', title="Número de Suicídios por Gênero no Brasil")
+    st.plotly_chart(fig)
+# Adicionando interatividade com Plotly
+st.header("Gráficos Interativos")
+option = st.selectbox('Selecione o Gráfico', ('Tendência de Suicídios por Sexo', 'Suicídios por Faixa Etária', 'Suicídios por Geração', 'Suicídios por Gênero'))
+
+if option == 'Tendência de Suicídios por Sexo':
+    fig = px.line(df_trend, labels={'value': 'Taxa de Suicídio por 100k habitantes', 'year': 'Ano'}, title="Tendência das Taxas de Suicídio por Sexo ao Longo do Tempo")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Faixa Etária':
+    fig = px.bar(tabela.reset_index(), x='year', y=tabela.columns, barmode='stack', title="Suicídios por Faixa Etária no Brasil")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Geração':
+    fig = px.histogram(df_brasil, x='generation', title="Suicídios por Geração no Brasil")
+    st.plotly_chart(fig)
+
+elif option == 'Suicídios por Gênero':
+    fig = px.pie(df_brasil, names='sex', values='suicides_no', title="Número de Suicídios por Gênero no Brasil")
+    st.plotly_chart(fig)
+# Adicionando mais gráficos interativos
+st.header("Mais Gráficos Interativos")
+
+# Gráfico interativo de suicídios por país ao longo do tempo
+st.subheader("Suicídios por País ao Longo do Tempo")
+country_selection = st.multiselect("Selecione o(s) país(es)", df['country'].unique())
+df_countries = df[df['country'].isin(country_selection)]
+fig = px.line(df_countries, x='year', y='suicides/100k pop', color='country', title="Suicídios por País ao Longo do Tempo")
+st.plotly_chart(fig)
+
+# Gráfico interativo de suicídios por geração e sexo
+st.subheader("Suicídios por Geração e Sexo")
+fig = px.bar(df_brasil, x='generation', y='suicides_no', color='sex', barmode='group', title="Suicídios por Geração e Sexo no Brasil")
+st.plotly_chart(fig)
+
+# Gráfico interativo de suicídios por faixa etária e gênero
+st.subheader("Suicídios por Faixa Etária e Gênero")
+fig = px.bar(df_brasil, x='age', y='suicides_no', color='sex', barmode='group', title="Suicídios por Faixa Etária e Gênero no Brasil")
+st.plotly_chart(fig)
+
+# Adicionando opções de filtros e busca
+st.sidebar.header("Opções de Filtro e Busca")
+
+# Filtrar por país
+country_filter = st.sidebar.multiselect("Filtrar por País", df['country'].unique())
+
+# Filtrar por geração
+generation_filter = st.sidebar.multiselect("Filtrar por Geração", df['generation'].unique())
+
+# Filtrar por faixa etária
+age_filter = st.sidebar.multiselect("Filtrar por Faixa Etária", df['age'].unique())
+
+# Aplicar filtros
+filtered_df = df[(df['country'].isin(country_filter)) & (df['generation'].isin(generation_filter)) & (df['age'].isin(age_filter))]
+
+# Exibir dados filtrados
+st.subheader("Dados Filtrados")
+st.write(filtered_df.head())
+
+# Adicionando mais análises e visualizações...
+
+# Gráfico interativo de mapa de calor de suicídios por país ao longo do tempo
+st.subheader("Mapa de Calor de Suicídios por País ao Longo do Tempo")
+fig = px.choropleth(df, 
+                    locations="country", 
+                    locationmode='country names', 
+                    color="suicides_no", 
+                    hover_name="country", 
+                    animation_frame="year",
+                    range_color=[0, df['suicides_no'].max()],
+                    title="Mapa de Calor de Suicídios por País ao Longo do Tempo")
+fig.update_layout(geo=dict(showframe=False, showcoastlines=False))
+st.plotly_chart(fig)
+
+# Gráfico interativo de distribuição de suicídios por ano
+st.subheader("Distribuição de Suicídios por Ano")
+fig = px.histogram(df, x='year', title="Distribuição de Suicídios por Ano")
+st.plotly_chart(fig)
+
+# Gráfico interativo de distribuição de suicídios por país
+st.subheader("Distribuição de Suicídios por País")
+fig = px.histogram(df, x='country', title="Distribuição de Suicídios por País")
+st.plotly_chart(fig)
+
+# Adicionar mais análises e visualizações conforme necessário...
+

@@ -325,7 +325,7 @@ st.plotly_chart(fig)
 
 
 
-import matplotlib.pyplot as plt
+
 
 # Dados de exemplo (taxa de suicídios por faixa etária)
 faixas_etarias = ['0-14 anos', '15-24 anos', '25-34 anos', '35-54 anos', '55-74 anos', '75+ anos']
@@ -358,3 +358,4 @@ ax.legend(loc='lower right')
 
 # Exibindo o gráfico
 plt.show()
+

@@ -314,3 +314,5 @@ fig.update_layout(coloraxis_colorbar=dict(title="Suicídios/100k Habitantes"),
 st.plotly_chart(fig)
 
 
+print(gdf_brazil_states.head())
+print(gdf_brazil_states.info())

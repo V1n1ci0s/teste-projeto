@@ -288,38 +288,4 @@ st.subheader("Distribuição de Suicídios por País")
 fig = px.histogram(df, x='country', title="Distribuição de Suicídios por País")
 st.plotly_chart(fig)
 
-# URL do arquivo GeoJSON com as fronteiras dos estados do Brasil
-url = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson"
-
-# Configurações iniciais
-sns.set_style("dark")
-cor_genero = ['#F781D8', '#819FF7']
-st.set_page_config(layout="wide")
-
-# Carregar dados
-df = pd.read_csv('https://raw.githubusercontent.com/V1n1ci0s/projeto-Kayo_ter-a/main/base%20dados.csv')
-
-# Títulos e descrições
-st.title("Análise de Suicídios")
-st.write("""
-         Este aplicativo interativo analisa as taxas de suicídio globalmente e no Brasil ao longo do tempo, com base em dados históricos.
-         """)
-
-# Exibir dataframe inicial
-st.header("Dados Iniciais")
-st.write(df.head())
-
-# Carregar GeoJSON das fronteiras dos estados do Brasil diretamente com Plotly Express
-fig = px.choropleth(df_brasil_map_filtered, 
-                    geojson=url,  # GeoJSON com as fronteiras dos estados do Brasil
-                    locations='state', 
-                    featureidkey="properties.sigla",  # Chave para identificar o estado no GeoJSON
-                    color="suicides/100k pop", 
-                    hover_name="state", 
-                    animation_frame="year",
-                    title="Taxa de Suicídio por 100k Habitantes por Estado no Brasil")
-fig.update_geos(projection_type="mercator")  # Definir a projeção para mercator
-fig.update_layout(coloraxis_colorbar=dict(title="Suicídios/100k Habitantes"),
-                  margin={"r":0,"t":30,"l":0,"b":0})
-st.plotly_chart(fig)
 

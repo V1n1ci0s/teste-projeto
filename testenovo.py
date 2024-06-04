@@ -96,6 +96,26 @@ sns.countplot(x='generation', order=df_brasil['generation'].value_counts().index
 ax.set_xlabel('Gerações', fontsize=13)
 ax.set_title('Suicídio por geração', fontsize=21)
 st.pyplot(fig)
+# Gráfico interativo do mapa do Brasil
+st.header("Mapa do Brasil de Taxas de Suicídio por Estado ao Longo do Tempo")
+df_brasil_map = df[df['country'] == 'Brazil']
+
+# Filtrar anos selecionados
+anos_selecionados = st.slider("Selecione o Intervalo de Anos", int(df_brasil_map['year'].min()), int(df_brasil_map['year'].max()), (int(df_brasil_map['year'].min()), int(df_brasil_map['year'].max())))
+
+df_brasil_map_filtered = df_brasil_map[(df_brasil_map['year'] >= anos_selecionados[0]) & (df_brasil_map['year'] <= anos_selecionados[1])]
+
+fig = px.choropleth(df_brasil_map_filtered, 
+                    locations="state", 
+                    locationmode="Brazil",
+                    color="suicides/100k pop", 
+                    hover_name="state", 
+                    animation_frame="year",
+                    title="Taxa de Suicídio por 100k Habitantes por Estado no Brasil")
+fig.update_layout(geo=dict(scope='south america'),
+                  coloraxis_colorbar=dict(title="Suicídios/100k Habitantes"),
+                  margin={"r":0,"t":30,"l":0,"b":0})
+st.plotly_chart(fig)
 
 # Gráfico de suicídio por gênero
 generos = df_brasil.groupby('sex').suicides_no.sum() / df_brasil.groupby('sex').suicides_no.sum().sum()

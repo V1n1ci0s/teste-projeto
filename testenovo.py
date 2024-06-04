@@ -286,6 +286,14 @@ st.subheader("Distribuição de Suicídios por País")
 fig = px.histogram(df, x='country', title="Distribuição de Suicídios por País")
 st.plotly_chart(fig)
 
+import geopandas as gpd
+
+# URL do arquivo GeoJSON com as fronteiras dos estados do Brasil
+url = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson"
+
+# Carregar o arquivo GeoJSON das fronteiras dos estados do Brasil
+gdf_brazil_states = gpd.read_file(url)
+
 # Gráfico interativo do mapa do Brasil
 st.header("Mapa do Brasil de Taxas de Suicídio por Estado ao Longo do Tempo")
 df_brasil_map = df[df['country'] == 'Brazil']

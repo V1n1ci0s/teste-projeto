@@ -6,11 +6,6 @@ import seaborn as sns
 import plotly.express as px
 import geopandas as gpd
 
-# URL do arquivo GeoJSON com as fronteiras dos estados do Brasil
-url = "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson"
-
-# Carregar o arquivo GeoJSON das fronteiras dos estados do Brasil
-gdf_brazil_states = gpd.read_file(url)
 # Configurações iniciais
 sns.set_style("dark")
 cor_genero = ['#F781D8', '#819FF7']
@@ -18,6 +13,8 @@ st.set_page_config(layout="wide")
 
 # Carregar dados
 df = pd.read_csv('https://raw.githubusercontent.com/V1n1ci0s/projeto-Kayo_ter-a/main/base%20dados.csv')
+gdf_brazil_states = gpd.read_file("https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson"
+)
 
 # Títulos e descrições
 st.title("Análise de Suicídios")

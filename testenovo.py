@@ -295,36 +295,6 @@ st.plotly_chart(fig)
 
 # TESTES, DAQUI PRA BAIXO
 
-import plotly.graph_objects as go
-
-# Criando um gráfico em forma de árvore de decisão
-fig = go.Figure()
-
-# Adicionando os nós da árvore de decisão
-fig.add_trace(go.Scatter(x=[0.5, 0.5], y=[0.9, 0.7], mode="lines", line=dict(color="black"), showlegend=False))
-fig.add_trace(go.Scatter(x=[0.3, 0.5, 0.7], y=[0.7, 0.5, 0.7], mode="lines", line=dict(color="black"), showlegend=False))
-fig.add_trace(go.Scatter(x=[0.25, 0.35], y=[0.5, 0.3], mode="lines", line=dict(color="black"), showlegend=False))
-fig.add_trace(go.Scatter(x=[0.65, 0.75], y=[0.5, 0.3], mode="lines", line=dict(color="black"), showlegend=False))
-
-# Adicionando os nós de decisão e folhas
-fig.add_trace(go.Scatter(x=[0.3], y=[0.7], mode="markers+text", marker=dict(color="green", size=20), text=["Decisão 1"], showlegend=False))
-fig.add_trace(go.Scatter(x=[0.5], y=[0.5], mode="markers+text", marker=dict(color="red", size=20), text=["Decisão 2"], showlegend=False))
-fig.add_trace(go.Scatter(x=[0.7], y=[0.7], mode="markers+text", marker=dict(color="green", size=20), text=["Decisão 3"], showlegend=False))
-fig.add_trace(go.Scatter(x=[0.25], y=[0.3], mode="markers+text", marker=dict(color="blue", size=20), text=["Folha 1"], showlegend=False))
-fig.add_trace(go.Scatter(x=[0.75], y=[0.3], mode="markers+text", marker=dict(color="blue", size=20), text=["Folha 2"], showlegend=False))
-
-# Configurando o layout do gráfico
-fig.update_layout(title="Árvore de Decisão",
-                  xaxis=dict(visible=False),
-                  yaxis=dict(visible=False),
-                  width=600,
-                  height=600)
-
-# Exibindo o gráfico
-st.plotly_chart(fig)
-
-
-
 
 
 # Dados de exemplo (taxa de suicídios por faixa etária)

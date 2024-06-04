@@ -289,3 +289,18 @@ fig = px.histogram(df, x='country', title="Distribuição de Suicídios por Paí
 st.plotly_chart(fig)
 
 
+# Carregar dados geoespaciais do Brasil
+gdf_brazil = gpd.read_file("https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil.geojson")
+
+# Plotar o mapa interativo do Brasil
+st.header("Mapa Interativo do Brasil")
+fig = px.choropleth_mapbox(gdf_brazil, 
+                           geojson=gdf_brazil.geometry, 
+                           locations=gdf_brazil.index, 
+                           color=gdf_brazil.index,
+                           mapbox_style="carto-positron",
+                           title="Mapa Interativo do Brasil")
+fig.update_geos(fitbounds="locations", visible=False)
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+st.plotly_chart(fig)
+

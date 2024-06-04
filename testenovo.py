@@ -290,7 +290,7 @@ st.plotly_chart(fig)
 
 
 # Carregar dados geoespaciais do Brasil
-gdf_brazil = gpd.read_file("https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil.geojson")
+gdf_brazil = gpd.read_file("brasil.csv")
 
 # Plotar o mapa interativo do Brasil
 st.header("Mapa Interativo do Brasil")

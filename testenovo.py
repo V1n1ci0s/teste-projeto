@@ -8,6 +8,7 @@ import geopandas as gpd
 import networkx as nx
 import plotly.graph_objects as go
 
+
 # Configurações iniciais
 sns.set_style("dark")
 cor_genero = ['#F781D8', '#819FF7']
@@ -334,3 +335,36 @@ fig = go.Figure(data=[go.Sankey(
 fig.update_layout(title_text="Gráfico de Sankey")
 fig.show()
 
+
+
+# Crie um gráfico de árvore radial
+fig = go.Figure(go.Sunburst(
+    labels=["A", "B", "C", "D", "E", "F"],
+    parents=["", "A", "B", "C", "D", "E"],
+    values=[10, 20, 30, 40, 50, 60],
+    branchvalues="total",
+))
+fig.update_layout(title_text="Gráfico de Árvore Radial")
+fig.show()
+
+
+# Crie um gráfico de bolhas 3D
+fig = go.Figure(data=[go.Scatter3d(
+    x=df['suicides_no'],
+    y=df['gdp_per_capita ($)'],
+    z=df['HDI for year'],
+    mode='markers',
+    marker=dict(
+        size=12,
+        color=df['suicides_no'],
+        colorscale='Viridis',
+        opacity=0.8
+    )
+)])
+
+fig.update_layout(scene=dict(
+    xaxis_title='Número de Suicídios',
+    yaxis_title='PIB per Capita ($)',
+    zaxis_title='IDH',
+))
+fig.show()

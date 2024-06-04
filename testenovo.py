@@ -322,3 +322,30 @@ fig.update_layout(title="Árvore de Decisão",
 
 # Exibindo o gráfico
 st.plotly_chart(fig)
+
+
+
+# Dados de exemplo (taxa de suicídios por faixa etária)
+faixas_etarias = ['0-14 anos', '15-24 anos', '25-34 anos', '35-54 anos', '55-74 anos', '75+ anos']
+taxa_suicidios = [10, 25, 30, 45, 35, 20]  # Valores fictícios apenas para demonstração
+
+# Criando uma figura e eixos
+fig, ax = plt.subplots(figsize=(4, 8))
+
+# Plotando barras verticais
+ax.barh(faixas_etarias, taxa_suicidios, color='skyblue')
+
+# Adicionando título e rótulos
+ax.set_title('Gráfico em Forma de Humano')
+ax.set_xlabel('Taxa de Suicídios')
+ax.set_ylabel('Faixa Etária')
+
+# Removendo eixos
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
+
+# Exibindo o gráfico
+plt.show()
+

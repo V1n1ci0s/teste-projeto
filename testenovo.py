@@ -325,19 +325,26 @@ st.plotly_chart(fig)
 
 
 
+import matplotlib.pyplot as plt
+
 # Dados de exemplo (taxa de suicídios por faixa etária)
 faixas_etarias = ['0-14 anos', '15-24 anos', '25-34 anos', '35-54 anos', '55-74 anos', '75+ anos']
 taxa_suicidios = [10, 25, 30, 45, 35, 20]  # Valores fictícios apenas para demonstração
+
+# Cores para cada faixa etária
+cores = ['lightblue', 'lightgreen', 'lightcoral', 'lightsalmon', 'lightseagreen', 'lightskyblue']
 
 # Criando uma figura e eixos
 fig, ax = plt.subplots(figsize=(4, 8))
 
 # Plotando barras verticais
-ax.barh(faixas_etarias, taxa_suicidios, color='skyblue')
+for i, (faixa_etaria, taxa, cor) in enumerate(zip(faixas_etarias, taxa_suicidios, cores)):
+    ax.barh(faixa_etaria, taxa, color=cor, label=faixa_etaria)
+    ax.text(taxa + 0.5, i, f'{taxa}%', va='center', color='black')
 
 # Adicionando título e rótulos
 ax.set_title('Gráfico em Forma de Humano')
-ax.set_xlabel('Taxa de Suicídios')
+ax.set_xlabel('Taxa de Suicídios (%)')
 ax.set_ylabel('Faixa Etária')
 
 # Removendo eixos
@@ -346,6 +353,8 @@ ax.spines['right'].set_visible(False)
 ax.spines['bottom'].set_visible(False)
 ax.spines['left'].set_visible(False)
 
+# Adicionando legenda
+ax.legend(loc='lower right')
+
 # Exibindo o gráfico
 plt.show()
-

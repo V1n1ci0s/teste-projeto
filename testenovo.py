@@ -295,76 +295,30 @@ st.plotly_chart(fig)
 
 # TESTES, DAQUI PRA BAIXO
 
+import plotly.graph_objects as go
 
-# Crie um gráfico de rede vazio
-G = nx.Graph()
+# Criando um gráfico em forma de árvore de decisão
+fig = go.Figure()
 
-# Adicione nós para representar países
-G.add_nodes_from(df['country'].unique())
+# Adicionando os nós da árvore de decisão
+fig.add_trace(go.Scatter(x=[0.5, 0.5], y=[0.9, 0.7], mode="lines", line=dict(color="black"), showlegend=False))
+fig.add_trace(go.Scatter(x=[0.3, 0.5, 0.7], y=[0.7, 0.5, 0.7], mode="lines", line=dict(color="black"), showlegend=False))
+fig.add_trace(go.Scatter(x=[0.25, 0.35], y=[0.5, 0.3], mode="lines", line=dict(color="black"), showlegend=False))
+fig.add_trace(go.Scatter(x=[0.65, 0.75], y=[0.5, 0.3], mode="lines", line=dict(color="black"), showlegend=False))
 
-# Adicione arestas para representar conexões entre países (por exemplo, comércio, migração, etc.)
-# Suponha que você tenha dados de conexões entre países em um DataFrame chamado df_connections
-for index, row in df_connections.iterrows():
-    G.add_edge(row['country_source'], row['country_target'], weight=row['connection_strength'])
+# Adicionando os nós de decisão e folhas
+fig.add_trace(go.Scatter(x=[0.3], y=[0.7], mode="markers+text", marker=dict(color="green", size=20), text=["Decisão 1"], showlegend=False))
+fig.add_trace(go.Scatter(x=[0.5], y=[0.5], mode="markers+text", marker=dict(color="red", size=20), text=["Decisão 2"], showlegend=False))
+fig.add_trace(go.Scatter(x=[0.7], y=[0.7], mode="markers+text", marker=dict(color="green", size=20), text=["Decisão 3"], showlegend=False))
+fig.add_trace(go.Scatter(x=[0.25], y=[0.3], mode="markers+text", marker=dict(color="blue", size=20), text=["Folha 1"], showlegend=False))
+fig.add_trace(go.Scatter(x=[0.75], y=[0.3], mode="markers+text", marker=dict(color="blue", size=20), text=["Folha 2"], showlegend=False))
 
-# Desenhe o gráfico de rede
-plt.figure(figsize=(12, 8))
-pos = nx.spring_layout(G)  # Posicionamento dos nós
-nx.draw(G, pos, with_labels=True, node_size=2000, node_color='skyblue', font_size=10, font_weight='bold')
-edge_labels = nx.get_edge_attributes(G, 'weight')
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-plt.title('Gráfico de Rede de Conexões entre Países')
-plt.show()
+# Configurando o layout do gráfico
+fig.update_layout(title="Árvore de Decisão",
+                  xaxis=dict(visible=False),
+                  yaxis=dict(visible=False),
+                  width=600,
+                  height=600)
 
-
-
-# Crie um gráfico de Sankey
-fig = go.Figure(data=[go.Sankey(
-    node=dict(
-        pad=15,
-        thickness=20,
-        line=dict(color="black", width=0.5),
-        label=["Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4", "Grupo 5", "Grupo 6"]
-    ),
-    link=dict(
-        source=[0, 1, 1, 2, 2, 3, 3, 4],
-        target=[2, 3, 4, 5, 6, 5, 6, 5],
-        value=[8, 4, 2, 8, 4, 2, 8, 4]
-    ))])
-
-fig.update_layout(title_text="Gráfico de Sankey")
-fig.show()
-
-
-
-# Crie um gráfico de árvore radial
-fig = go.Figure(go.Sunburst(
-    labels=["A", "B", "C", "D", "E", "F"],
-    parents=["", "A", "B", "C", "D", "E"],
-    values=[10, 20, 30, 40, 50, 60],
-    branchvalues="total",
-))
-fig.update_layout(title_text="Gráfico de Árvore Radial")
-fig.show()
-
-
-# Crie um gráfico de bolhas 3D
-fig = go.Figure(data=[go.Scatter3d(
-    x=df['suicides_no'],
-    y=df['gdp_per_capita ($)'],
-    z=df['HDI for year'],
-    mode='markers',
-    marker=dict(
-        size=12,
-        color=df['suicides_no'],
-        colorscale='Viridis',
-        opacity=0.8
-    )
-)])
-
-fig.update_layout(scene=dict(
-    xaxis_title='Número de Suicídios',
-    yaxis_title='PIB per Capita ($)',
-    zaxis_title='IDH',
-))
-fig.show()
+# Exibindo o gráfico
+st.plotly_chart(fig)

@@ -329,3 +329,59 @@ ax.legend(loc='lower right')
 # Exibindo o gráfico
 plt.show()
 
+
+# Criando uma figura e eixos
+fig, ax = plt.subplots(figsize=(6, 6))
+
+# Desenhando o tronco da árvore
+ax.plot([0.5, 0.5], [0.1, 0.7], color='brown', lw=10)
+
+# Desenhando os galhos da árvore
+ax.plot([0.5, 0.2], [0.7, 0.9], color='green', lw=8)
+ax.plot([0.5, 0.8], [0.7, 0.9], color='green', lw=8)
+ax.plot([0.5, 0.3], [0.6, 0.8], color='green', lw=8)
+ax.plot([0.5, 0.7], [0.6, 0.8], color='green', lw=8)
+
+# Desenhando as folhas da árvore
+ax.plot([0.2, 0.3], [0.9, 0.95], color='darkgreen', lw=8)
+ax.plot([0.2, 0.4], [0.85, 0.9], color='darkgreen', lw=8)
+ax.plot([0.2, 0.25], [0.8, 0.85], color='darkgreen', lw=8)
+ax.plot([0.2, 0.35], [0.75, 0.8], color='darkgreen', lw=8)
+ax.plot([0.8, 0.7], [0.9, 0.95], color='darkgreen', lw=8)
+ax.plot([0.8, 0.6], [0.85, 0.9], color='darkgreen', lw=8)
+ax.plot([0.8, 0.75], [0.8, 0.85], color='darkgreen', lw=8)
+ax.plot([0.8, 0.65], [0.75, 0.8], color='darkgreen', lw=8)
+
+# Adicionando título
+ax.set_title('Gráfico em Forma de Árvore')
+
+# Removendo eixos
+ax.axis('off')
+
+# Exibindo o gráfico
+plt.show()
+
+
+# Dados de exemplo (coordenadas x e y para desenhar um carro)
+carro_x = [1, 2, 2, 1.5, 1.5, 1.3, 1.3, 1.7, 1.7, 1.5, 1.5, 1.2, 1.8]
+carro_y = [1, 1, 2, 2, 2.5, 2.5, 2.7, 2.7, 2.5, 2.5, 2, 2, 1]
+
+# Criando uma figura e eixos
+fig, ax = plt.subplots(figsize=(5, 3))
+
+# Plotando o carro
+ax.plot(carro_x, carro_y, color='blue')
+ax.plot([1.1, 1.3], [1.2, 1.2], color='black')
+ax.plot([1.7, 1.9], [1.2, 1.2], color='black')
+ax.plot([1.1, 1.1], [1, 1.8], color='black')
+ax.plot([1.9, 1.9], [1, 1.8], color='black')
+ax.plot([1.4, 1.6], [2.7, 2.7], color='black')
+
+# Adicionando título e removendo eixos
+ax.set_title('Gráfico em Forma de Carro')
+ax.axis('off')
+
+# Exibindo o gráfico
+plt.show()
+
+
